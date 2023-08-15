@@ -1,14 +1,22 @@
 const { paginate } = require("../utils/paginate");
 
 const Project = require("../../models").project;
+const ProjectLanguage = require("../../models").project_language;
+const Language = require('../../models').language;
 
 exports.getAllProject = async () => {
-  const project = await Project.findAll();
   const projectPaginate = await paginate(
     Project,
     {},
     { exclude: ["createdAt", "updatedAt"] },
-    [],
+    [
+      {
+        model: Language,
+        as: 'languages',
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    ],
     1,
     10
   );

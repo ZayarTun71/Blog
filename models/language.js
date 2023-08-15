@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       language.belongsToMany(models.project, {
-        through: 'project_language',
-        foreignKey: 'language_id'
+        through: models.project_language,
+        foreignKey: 'language_id',
+        as:'projects'
       });
     }
   }
