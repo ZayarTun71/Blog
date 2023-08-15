@@ -7,19 +7,20 @@ const {
 const {
   createProjectLanguage,
   updateProjectLanguage,
-  deleteProjectLanguage
+  deleteProjectLanguage,
 } = require("../services/projectLanguage");
+const { projectLanguageSchema } = require("../schema/project_language");
 
 exports.createProjectLanguage = async (req, res, next) => {
   const startTime = Date.now();
   try {
-    //   const validation = validator.validate(req.body, languageSchema);
-    //   if (!validation.valid) {
-    //     const errors = validationErrors(validation);
-    //     return errorResponse(req, res, 400, errors, startTime);
-    //   }
+    const validation = validator.validate(req.body, projectLanguageSchema);
+    if (!validation.valid) {
+      const errors = validationErrors(validation);
+      return errorResponse(req, res, 400, errors, startTime);
+    }
 
-    const project_language = await createProjectLanguage(req.body);
+    const project_language = await createProjectLanguage(validation.instance);
     return successResponse(
       req,
       res,
@@ -38,7 +39,17 @@ exports.updateProjectLanguage = async (req, res, next) => {
   const startTime = Date.now();
   try {
     const id = parseInt(req.params.id);
-    const project_language = await updateProjectLanguage(id, req.body);
+
+    const validation = validator.validate(req.body, projectLanguageSchema);
+    if (!validation.valid) {
+      const errors = validationErrors(validation);
+      return errorResponse(req, res, 400, errors, startTime);
+    }
+
+    const project_language = await updateProjectLanguage(
+      id,
+      validation.instance
+    );
 
     return successResponse(
       req,
