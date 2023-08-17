@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       language.belongsToMany(models.project, {
         through: models.project_language,
         foreignKey: 'language_id',
-        as:'projects'
+        as:'projects',
+        onDelete: "CASCADE",
       });
     }
   }
@@ -23,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'language',
+    paranoid: true,
+    timestamps: true,
+    deletedAt: "deletedAt",
   });
   return language;
 };

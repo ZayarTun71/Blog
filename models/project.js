@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.project_language,
         foreignKey: "project_id",
         as: "languages",
+        onDelete: "CASCADE",
       });
     }
   }
@@ -27,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "project",
+      paranoid: true,
+      timestamps: true,
+      deletedAt: "deletedAt",
     }
   );
   return project;

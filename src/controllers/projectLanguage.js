@@ -10,6 +10,8 @@ const {
   deleteProjectLanguage,
 } = require("../services/projectLanguage");
 const { projectLanguageSchema } = require("../schema/project_language");
+const { Validator } = require("jsonschema");
+const validator = new Validator();
 
 exports.createProjectLanguage = async (req, res, next) => {
   const startTime = Date.now();

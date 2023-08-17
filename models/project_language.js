@@ -11,11 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       project_language.belongsTo(models.project, {
         foreignKey: "project_id",
-        as:'projects'
+        as:'projects',
+        onDelete: "CASCADE",
       });
       project_language.belongsTo(models.language, {
         foreignKey: "language_id",
-        as:'languages'
+        as:'languages',
+        onDelete: "CASCADE",
       });
     }
   }
@@ -27,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "project_language",
+      paranoid: true,
+      timestamps: true,
+      deletedAt: "deletedAt",
     }
   );
   return project_language;

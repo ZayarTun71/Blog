@@ -40,6 +40,7 @@ exports.updateProject = async (id, data) => {
 };
 
 exports.deleteProject = async (id) => {
+  
   const project = await Project.findByPk(id);
   const delete_project = project.destroy();
   return delete_project;
